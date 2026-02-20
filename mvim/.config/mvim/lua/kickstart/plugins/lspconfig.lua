@@ -186,7 +186,6 @@ return {
 
 			-- Enable the following language servers
 			local servers = {
-				pyright = {},
 				lua_ls = {
 					settings = {
 						Lua = {
@@ -221,7 +220,9 @@ return {
 					end,
 				},
 			})
-			-- vim.lsp.enable("mojo")
+			-- ty: Python type checker from Astral (ruff team)
+			-- Install: brew install ty  (or: uvx ty)
+			vim.lsp.enable("ty")
 		end,
 	},
 }
