@@ -1,0 +1,6 @@
+# Neovim profiles (NVIM_APPNAME)
+alias mvim='NVIM_APPNAME=mvim nvim'
+# alias pvim='NVIM_APPNAME=pvim nvim'    # Python: pyright, ruff, debugpy
+# alias tvim='NVIM_APPNAME=tvim nvim'    # TypeScript: ts_ls, prettier, eslint
+# alias zvim='NVIM_APPNAME=zvim nvim'    # Zig: zls
+# alias phpvim='NVIM_APPNAME=phpvim nvim' # PHP: intelephense
