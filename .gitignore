@@ -21,3 +21,4 @@ CLAUDE.md
 
 # Machine-specific aliases (not tracked)
 shell/.aliases.*
+tmux/.config/tmux/plugins/
