@@ -1,3 +1,9 @@
+# Universal aliases — tracked in dotfiles repo
+# For machine-specific aliases, create:
+#   ~/.aliases.work      (SSH hosts, VPN, work tools)
+#   ~/.aliases.personal  (home servers, personal shortcuts)
+# They'll be auto-sourced but never committed.
+
 # Neovim profiles (NVIM_APPNAME)
 alias mvim='NVIM_APPNAME=mvim nvim'
 # alias pvim='NVIM_APPNAME=pvim nvim'    # Python: pyright, ruff, debugpy

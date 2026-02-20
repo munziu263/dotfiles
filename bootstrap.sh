@@ -57,16 +57,16 @@ for dir in mvim tmux starship; do
     stow -R "$dir"
 done
 
-# Source aliases
-if ! grep -q 'source.*\.aliases' "$HOME/.zshrc" 2>/dev/null && \
-   ! grep -q 'source.*\.aliases' "$HOME/.bashrc" 2>/dev/null; then
-    echo ""
-    echo "Add this to your .zshrc or .bashrc:"
-    echo "  source ~/.aliases"
-fi
-
 # Link aliases file directly (not stow — it goes to $HOME)
 ln -sf "$DOTFILES_DIR/shell/.aliases" "$HOME/.aliases"
+
+# Source aliases
+if ! grep -q 'for f in ~/.aliases' "$HOME/.zshrc" 2>/dev/null && \
+   ! grep -q 'for f in ~/.aliases' "$HOME/.bashrc" 2>/dev/null; then
+    echo ""
+    echo "Add this to your .zshrc or .bashrc:"
+    echo '  for f in ~/.aliases ~/.aliases.*; do [ -f "$f" ] && source "$f"; done'
+fi
 
 echo ""
 echo "✅ Done! Open a new terminal or run: source ~/.aliases"
