@@ -186,11 +186,7 @@ return {
 
 			-- Enable the following language servers
 			local servers = {
-				clangd = {},
 				pyright = {},
-				ts_ls = {},
-				jdtls = {},
-				zls = {}, -- Zig Language Server
 				lua_ls = {
 					settings = {
 						Lua = {
@@ -206,12 +202,8 @@ return {
 			local ensure_installed = vim.tbl_keys(servers or {})
 			vim.list_extend(ensure_installed, {
 				"stylua", -- Used to format Lua code
-				-- c
-				"clang-format",
 				-- python - using only ruff for formatting and linting
 				"ruff",
-				-- js, ts, jsx, tsx
-				"prettier",
 			})
 			require("mason-tool-installer").setup({ ensure_installed = ensure_installed })
 
@@ -229,7 +221,7 @@ return {
 					end,
 				},
 			})
-			vim.lsp.enable("mojo")
+			-- vim.lsp.enable("mojo")
 		end,
 	},
 }
