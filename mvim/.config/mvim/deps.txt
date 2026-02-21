@@ -1,0 +1,4 @@
+# mvim dependencies — installed lazily on first launch
+# Python (daily driver)
+brew:ty
+brew:ruff

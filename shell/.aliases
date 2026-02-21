@@ -4,13 +4,21 @@
 #   ~/.aliases.personal  (home servers, personal shortcuts)
 # They'll be auto-sourced but never committed.
 
+# Lazy-loading neovim profile launcher
+_nvim_profile() {
+    local profile="$1"
+    shift
+    # Install deps if needed (fast no-op if already installed)
+    bash "${DOTFILES_DIR:-$HOME/dotfiles}/shell/profile-deps.sh" "$profile"
+    NVIM_APPNAME="$profile" nvim "$@"
+}
 
-# Run Claude in yolo mode
-alias cdsp='claude --dangerously-skip-permissions'
+# Neovim profiles (NVIM_APPNAME + lazy deps)
+alias mvim='_nvim_profile mvim'
+# alias pvim='_nvim_profile pvim'    # Python: pyright, ruff, debugpy
+# alias tvim='_nvim_profile tvim'    # TypeScript: ts_ls, prettier, eslint
+# alias zvim='_nvim_profile zvim'    # Zig: zls
+# alias phpvim='_nvim_profile phpvim' # PHP: intelephense
 
-# Neovim profiles (NVIM_APPNAME)
-alias mvim='NVIM_APPNAME=mvim nvim'
-# alias pvim='NVIM_APPNAME=pvim nvim'    # Python: pyright, ruff, debugpy
-# alias tvim='NVIM_APPNAME=tvim nvim'    # TypeScript: ts_ls, prettier, eslint
-# alias zvim='NVIM_APPNAME=zvim nvim'    # Zig: zls
-# alias phpvim='NVIM_APPNAME=phpvim nvim' # PHP: intelephense
+# Dotfiles root (used by profile-deps.sh)
+export DOTFILES_DIR="$HOME/dotfiles"
