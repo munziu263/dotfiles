@@ -1,0 +1,16 @@
+theme = catppuccin-mocha.conf
+keybind = shift+enter=text:\n
+
+# Disable fixterms for problematic control keys
+# This ensures compatibility with zsh, bash, tmux, and neovim
+keybind = ctrl+c=text:\x03
+keybind = ctrl+i=text:\x09
+keybind = ctrl+m=text:\x0d
+keybind = ctrl+left_bracket=text:\x1b
+
+
+# notifications
+bell-features = audio
+bell-audio-path = /System/Library/Sounds/Ping.aiff
+bell-audio-volume = 0.8
+desktop-notifications = true

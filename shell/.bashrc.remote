@@ -1,0 +1,31 @@
+# Slim .bashrc for remote machines (Fedora)
+# Follows the same pattern as local .zshrc:
+#   PATH → tool init → aliases → secrets
+
+# PATH modifications
+export PATH="$HOME/.local/bin:$PATH"
+export PATH="$PATH:/opt/nvim-linux64/bin"
+export TERM=screen-256color
+
+# NVM (if installed)
+export NVM_DIR="$HOME/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
+[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"
+
+# Linuxbrew (if installed)
+[ -d /home/linuxbrew/.linuxbrew ] && eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
+
+# fzf (if installed)
+command -v fzf &>/dev/null && eval "$(fzf --bash)"
+
+# History
+HISTSIZE=10000
+HISTFILESIZE=20000
+HISTCONTROL=ignoreboth:erasedups
+shopt -s histappend
+
+# Source aliases (tracked in dotfiles) and machine-specific files
+for f in ~/.aliases ~/.aliases.*; do [ -f "$f" ] && source "$f"; done
+
+# Source secrets (never synced)
+[ -f ~/.secrets ] && source ~/.secrets

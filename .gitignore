@@ -15,10 +15,13 @@ __pycache__/
 *.swo
 *~
 
-# Claude/Copilot local settings
-.claude/
+# Claude/Copilot local settings (but track claude-plugins stow package)
+!claude-plugins/
 CLAUDE.md
 
 # Machine-specific aliases (not tracked)
 shell/.aliases.*
 tmux/.config/tmux/plugins/
+
+# Ghostty backups
+ghostty/.config/ghostty/*.bak

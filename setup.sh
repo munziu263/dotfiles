@@ -6,7 +6,7 @@ set -euo pipefail
 echo "🚀 Setting up Munatsi's dev environment"
 echo "========================================="
 
-# Detect OS
+# Detect OS and package manager
 if [[ "$OSTYPE" == "darwin"* ]]; then
     PKG="brew"
     # Install Homebrew if missing
@@ -15,18 +15,26 @@ if [[ "$OSTYPE" == "darwin"* ]]; then
         /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
         eval "$(/opt/homebrew/bin/brew shellenv 2>/dev/null || /usr/local/bin/brew shellenv)"
     fi
+elif command -v dnf &>/dev/null; then
+    PKG="dnf"
 else
     PKG="apt"
 fi
 
-# Install core tools
+# Install core tools only
 echo "Installing core tools..."
-if [[ "$PKG" == "brew" ]]; then
-    brew install neovim tmux fzf stow bat git
-else
-    sudo apt-get update -qq
-    sudo apt-get install -y neovim tmux fzf stow bat git
-fi
+case "$PKG" in
+    brew)
+        brew install neovim tmux fzf stow bat git ripgrep
+        ;;
+    dnf)
+        sudo dnf install -y neovim tmux fzf stow bat git ripgrep
+        ;;
+    apt)
+        sudo apt-get update -qq
+        sudo apt-get install -y neovim tmux fzf stow bat git ripgrep
+        ;;
+esac
 
 # Clone dotfiles
 if [ -d "$HOME/dotfiles" ]; then

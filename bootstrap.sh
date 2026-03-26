@@ -6,38 +6,35 @@ DOTFILES_DIR="$(cd "$(dirname "$0")" && pwd)"
 echo "🔧 Munatsi's dotfiles bootstrap"
 echo "================================"
 
+# Detect package manager
+if [[ "$OSTYPE" == "darwin"* ]]; then
+    PKG_INSTALL="brew install"
+elif command -v dnf &>/dev/null; then
+    PKG_INSTALL="sudo dnf install -y"
+else
+    PKG_INSTALL="sudo apt-get install -y"
+fi
+
 # Check for stow
 if ! command -v stow &> /dev/null; then
     echo "Installing stow..."
-    if [[ "$OSTYPE" == "darwin"* ]]; then
-        brew install stow
-    else
-        sudo apt-get install -y stow
-    fi
+    $PKG_INSTALL stow
 fi
 
 # Check for neovim
 if ! command -v nvim &> /dev/null; then
     echo "Installing neovim..."
-    if [[ "$OSTYPE" == "darwin"* ]]; then
-        brew install neovim
-    else
-        sudo apt-get install -y neovim
-    fi
+    $PKG_INSTALL neovim
 fi
 
 # Check for tmux
 if ! command -v tmux &> /dev/null; then
     echo "Installing tmux..."
-    if [[ "$OSTYPE" == "darwin"* ]]; then
-        brew install tmux
-    else
-        sudo apt-get install -y tmux
-    fi
+    $PKG_INSTALL tmux
 fi
 
-# Check for starship
-if ! command -v starship &> /dev/null; then
+# Check for starship (macOS only)
+if [[ "$OSTYPE" == "darwin"* ]] && ! command -v starship &> /dev/null; then
     echo "Installing starship..."
     curl -sS https://starship.rs/install.sh | sh -s -- -y
 fi
@@ -52,10 +49,24 @@ fi
 echo ""
 echo "Linking dotfiles..."
 cd "$DOTFILES_DIR"
-for dir in mvim tmux starship; do
+
+# Core packages (all machines)
+for dir in mvim tmux claude-plugins; do
     echo "  → $dir"
     stow -R "$dir"
 done
+
+# Starship (macOS only -- remote uses default prompt or installs separately)
+if [[ "$OSTYPE" == "darwin"* ]]; then
+    echo "  → starship"
+    stow -R starship
+fi
+
+# Ghostty (macOS only)
+if [[ "$OSTYPE" == "darwin"* ]]; then
+    echo "  → ghostty"
+    stow -R ghostty
+fi
 
 # Link aliases file directly (not stow — it goes to $HOME)
 ln -sf "$DOTFILES_DIR/shell/.aliases" "$HOME/.aliases"
@@ -74,3 +85,4 @@ echo ""
 echo "Next steps:"
 echo "  • tmux: press prefix + I to install plugins"
 echo "  • nvim: run 'mvim' — Lazy will auto-install plugins on first launch"
+echo "  • skills: npx skills add mattpocock/skills grill-me"
