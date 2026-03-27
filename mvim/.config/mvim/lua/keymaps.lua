@@ -1,7 +1,7 @@
 -- This helps me to play around with my nvim config
-vim.keymap.set("n", "<leader><leader>x", "<CMD>source %<CR>")
-vim.keymap.set("n", "<leader>x", ":.lua<CR>")
-vim.keymap.set("v", "<leader>x", ":lua<CR>")
+vim.keymap.set("n", "<leader>eL", "<CMD>source %<CR>")
+vim.keymap.set("n", "<leader>el", ":.lua<CR>")
+vim.keymap.set("v", "<leader>el", ":lua<CR>")
 
 -- Clear highlights on search when pressing <Esc> in normal mode
 vim.keymap.set("n", "<Esc>", "<cmd>nohlsearch<CR>")
@@ -59,7 +59,7 @@ vim.keymap.set("n", "<leader>p", function()
 end, { desc = "[P]review diagram in tmux pane" })
 
 -- Reload configuration
-vim.keymap.set("n", "<leader>rc", function()
+vim.keymap.set("n", "<leader><leader>r", function()
 	vim.cmd("source ~/.config/mvim/init.lua")
 	vim.notify("Config reloaded!", vim.log.levels.INFO)
-end, { desc = "[R]eload [C]onfig" })
+end, { desc = "Reload config" })
